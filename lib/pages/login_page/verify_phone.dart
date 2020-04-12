@@ -33,7 +33,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
     return SafeArea(
       child: Scaffold(
         key: _phoneScaffoldKey,
-        backgroundColor: Colors.blueGrey.shade50,
+        backgroundColor: Colors.white,
         body: Form(
           key: _phoneFormKey,
           child: ListView(
@@ -42,28 +42,31 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
               Container(
                 child: Row(
                   children: <Widget>[
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Container(
-                        height: 64.0,
-                        width: 64.0,
-                        padding: EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(
-                          'assets/logo.svg',
+                    Container(
+                      height: 64.0,
+                      width: 64.0,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            color: Colors.grey,
+                            width: 0.5,
+                          ),
                         ),
+                      ),
+                      padding: EdgeInsets.all(12.0),
+                      child: SvgPicture.asset(
+                        'assets/logo.svg',
                       ),
                     ),
                     SizedBox(
-                      width: 8.0,
+                      width: 16.0,
                     ),
                     Text(
                       'Tathastu',
-                      style: GoogleFonts.roboto(
+                      style: GoogleFonts.lato(
                         textStyle: Theme.of(context)
                             .textTheme
-                            .display1
+                            .headline
                             .copyWith(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
@@ -79,12 +82,10 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 child: Text(
                   'Tell us your phone number',
                   style: GoogleFonts.lato(
-                    textStyle: Theme.of(context)
-                        .textTheme
-                        .headline
-                        .copyWith(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                    textStyle: Theme.of(context).textTheme.title.copyWith(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ),
               ),
@@ -95,11 +96,12 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 child: TextFormField(
                   controller: _phoneController,
                   maxLength: 10,
+                  maxLengthEnforced: true,
                   style: GoogleFonts.lato(
-                      textStyle:
-                          Theme.of(context).textTheme.subhead.copyWith(
-                                fontWeight: FontWeight.bold,
-                              )),
+                    textStyle: Theme.of(context).textTheme.subhead.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Phone Number',
@@ -108,7 +110,20 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                     labelStyle: GoogleFonts.lato(),
                   ),
                   keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Phone number can not be empty.';
+                    } else if (value.length < 10) {
+                      return 'Phone number must be of 10 digits.';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
+                    setState(() {
+                      _phoneNumber = '+91' + value;
+                    });
+                  },
+                  onChanged: (value) {
                     setState(() {
                       _phoneNumber = '+91' + value;
                     });
@@ -120,33 +135,35 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
               ),
               Text(
                 'A 6 digit OTP will be sent via sms to verity your mobile number.',
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.lato(
                   textStyle: Theme.of(context)
                       .textTheme
-                      .body1
+                      .caption
                       .copyWith(color: Colors.grey.shade800),
                 ),
               ),
-              
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
           child: (_authService.loginStatus == LOGINSTATUS.VERIFYINGPHONE)
               ? Container(
                   height: 16.0,
                   width: 16.0,
                   child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: Colors.white,
                     strokeWidth: 3.0,
                   ),
                 )
               : Icon(
                   Icons.arrow_forward_ios,
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.white,
                 ),
-          onPressed: (_authService.loginStatus == LOGINSTATUS.VERIFYINGPHONE)
+
+          onPressed: (_authService.loginStatus == LOGINSTATUS.VERIFYINGPHONE ||
+                  _phoneNumber == null ||
+                  _phoneNumber.length == 0)
               ? null
               : () {
                   if (_phoneFormKey.currentState.validate()) {

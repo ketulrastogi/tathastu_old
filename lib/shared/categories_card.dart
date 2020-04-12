@@ -4,87 +4,83 @@ import 'package:tathastu/shared/category_item.dart';
 class CategoriesCardWidget extends StatelessWidget {
   final List<Map<String, dynamic>> items = [
     {
-      'iconUrl': 'assets/icons/health.svg',
+      'iconUrl': 'assets/icons/health_plus.svg',
       'title': 'Health',
     },
     {
-      'iconUrl': 'assets/icons/classroom.svg',
-      'title':  'Education',
+      'iconUrl': 'assets/icons/toolbox.svg',
+      'title': 'Repair',
     },
     {
-      'iconUrl': 'assets/icons/food.svg', 
+      'iconUrl': 'assets/icons/classroom.svg',
+      'title': 'Education',
+    },
+    {
+      'iconUrl': 'assets/icons/food.svg',
       'title': 'Food',
     },
     {
-      'iconUrl': 'assets/icons/entertainment.svg', 
-      'title': 'Entertainment',
+      'iconUrl': 'assets/icons/alarm.svg',
+      'title': 'Helplines',
     },
     {
-      'iconUrl': 'assets/icons/consultant.svg', 
+      'iconUrl': 'assets/icons/consultant.svg',
       'title': 'Consultants',
     },
     {
-      'iconUrl': 'assets/icons/office.svg', 
+      'iconUrl': 'assets/icons/office.svg',
       'title': 'Offices',
     },
     {
-      'iconUrl': 'assets/icons/shop.svg', 
+      'iconUrl': 'assets/icons/shop.svg',
       'title': 'Shops',
     },
-    {
-      'iconUrl': 'assets/icons/more.svg', 
-      'title': 'More',
-    }
+    // {
+    //   'iconUrl': 'assets/icons/more.svg',
+    //   'title': 'More',
+    // }
   ];
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 12.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-          child: Container(
-            height: 200.0,
-          
- 
-        // decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(8.0),
-        //               color: Colors.white,
-        //               boxShadow: [
-        //                 BoxShadow(
-        //                   color: Colors.blueGrey[100],
-        //                   blurRadius: 2.0,
-        //           spreadRadius: 1.0,
-        //           offset: Offset(0, 2),
-        //                 ),
-        //               ],
-        //             ),
-        // child: Center(
-        //   child: Wrap(
-        //     spacing: 8.0, // gap between adjacent chips
-        //     // runSpacing: 4.0, // gap between lines
-        //     children: <Widget>[
-        //       categoryItemComponent(context, , ,),
-        //       categoryItemComponent(context, ),
-        //       categoryItemComponent(context, ,),
-        //       categoryItemComponent(context, ),
-        //       categoryItemComponent(context, ),
-        //       categoryItemComponent(context, ),
-        //       categoryItemComponent(context, ),
-        //       categoryItemComponent(context, ),
-              
-        //     ],
-        //   ),
-        // ),
-        child: GridView.count(
+    return Container(
+      // height: 250.0,
+      // child: GridView.count(
+      //   physics: NeverScrollableScrollPhysics(),
+      //   shrinkWrap: true,
+      //   primary: true,
+      //   crossAxisCount: 4,
+      // mainAxisSpacing: 0.0,
+      // crossAxisSpacing: 0.0,
+      //   children: items.map((item) {
+      // return CategoryItemWidget(
+      //   title: item['title'],
+      //   iconUrl: item['iconUrl'],
+      // );
+      //   }).toList(),
+      // ),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
-
-          children: items.map((item){
-            return CategoryItemWidget(title: item['title'] ,iconUrl: item['iconUrl'],);
-          }).toList(),
         ),
+        itemCount: items.length + 1,
+        shrinkWrap: true,
+        primary: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          if (index == items.length) {
+            return CategoryItemWidget(
+              title: 'More',
+              iconUrl: 'assets/icons/more.svg',
+              category: Category.CATEGORYTYPE,
+            );
+          } else {
+            return CategoryItemWidget(
+              title: items[index]['title'],
+              iconUrl: items[index]['iconUrl'],
+              category: Category.CATEGORYGROUP,
+            );
+          }
+        },
       ),
     );
   }

@@ -35,7 +35,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
     return SafeArea(
       child: Scaffold(
         key: _codeScaffoldKey,
-        backgroundColor: Colors.blueGrey.shade50,
+        backgroundColor: Colors.white,
         body: Form(
           key: _codeFormKey,
           child: ListView(
@@ -44,28 +44,31 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
               Container(
                 child: Row(
                   children: <Widget>[
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Container(
-                        height: 64.0,
-                        width: 64.0,
-                        padding: EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(
-                          'assets/logo.svg',
+                    Container(
+                      height: 64.0,
+                      width: 64.0,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            color: Colors.grey,
+                            width: 0.5,
+                          ),
                         ),
+                      ),
+                      padding: EdgeInsets.all(12.0),
+                      child: SvgPicture.asset(
+                        'assets/logo.svg',
                       ),
                     ),
                     SizedBox(
-                      width: 8.0,
+                      width: 16.0,
                     ),
                     Text(
                       'Tathastu',
-                      style: GoogleFonts.roboto(
+                      style: GoogleFonts.lato(
                         textStyle: Theme.of(context)
                             .textTheme
-                            .display1
+                            .headline
                             .copyWith(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
@@ -81,7 +84,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
                 child: Text(
                   'Enter verification code',
                   style: GoogleFonts.lato(
-                    textStyle: Theme.of(context).textTheme.headline.copyWith(
+                    textStyle: Theme.of(context).textTheme.title.copyWith(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -95,7 +98,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
                   activeColor: Theme.of(context).primaryColor,
                   selectedColor: Theme.of(context).primaryColor,
                   inactiveColor: Colors.black,
-                  backgroundColor: Colors.blueGrey.shade50,
+                  // backgroundColor: Colors.blueGrey.shade50,
                   textStyle: GoogleFonts.lato(
                     textStyle: Theme.of(context).textTheme.subhead.copyWith(
                         color: Colors.black, fontWeight: FontWeight.bold),
@@ -121,10 +124,10 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
                 children: <Widget>[
                   Text(
                     'Enter sms code you received to ',
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.lato(
                       textStyle: Theme.of(context)
                           .textTheme
-                          .body1
+                          .caption
                           .copyWith(color: Colors.grey.shade800),
                     ),
                   ),
@@ -133,8 +136,8 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
                   ),
                   Text(
                     '${_authService.phoneNumber}.',
-                    style: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.body1.copyWith(
+                    style: GoogleFonts.lato(
+                      textStyle: Theme.of(context).textTheme.caption.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryColor,
                           ),
@@ -152,15 +155,17 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
               padding: EdgeInsets.only(left: 32.0),
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.arrow_left, color: Colors.grey),
+                  Icon(Icons.arrow_left, color: Theme.of(context).primaryColor),
                   SizedBox(
                     width: 4.0,
                   ),
                   Text(
                     'BACK',
-                    style: GoogleFonts.roboto(
-                      textStyle: Theme.of(context).textTheme.subhead.copyWith(
-                          fontWeight: FontWeight.w800, color: Colors.grey),
+                    style: GoogleFonts.lato(
+                      textStyle: Theme.of(context).textTheme.subtitle.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: Theme.of(context).primaryColor,
+                          ),
                     ),
                   ),
                 ],
@@ -170,36 +175,39 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
               },
             ),
             FloatingActionButton(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).primaryColor,
               child: (_authService.loginStatus == LOGINSTATUS.VERIFYINGCODE)
                   ? Container(
                       height: 16.0,
                       width: 16.0,
                       child: CircularProgressIndicator(
-                        backgroundColor: Theme.of(context).primaryColor,
+                        backgroundColor: Colors.white,
                         strokeWidth: 3.0,
                       ),
                     )
                   : Icon(
                       Icons.arrow_forward_ios,
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.white,
                     ),
-              onPressed: (_authService.loginStatus == LOGINSTATUS.VERIFYINGCODE)
-                  ? null
-                  : () {
-                      if (_codeFormKey.currentState.validate()) {
-                        _codeFormKey.currentState.save();
-                        if (_smsCode.length != 6) {
-                          showFlushBar(
-                              context,
-                              'Verifcation Code must be of 6 digits.Please enter correct code.',
-                              Icons.error,
-                              Colors.red);
-                        } else {
-                          _authService.signInWithPhoneNumber(_smsCode);
-                        }
-                      }
-                    },
+              onPressed:
+                  (_authService.loginStatus == LOGINSTATUS.VERIFYINGCODE ||
+                          _smsCode == null ||
+                          _smsCode.length == 0)
+                      ? null
+                      : () {
+                          if (_codeFormKey.currentState.validate()) {
+                            _codeFormKey.currentState.save();
+                            if (_smsCode.length != 6) {
+                              showFlushBar(
+                                  context,
+                                  'Verifcation Code must be of 6 digits.Please enter correct code.',
+                                  Icons.error,
+                                  Colors.red);
+                            } else {
+                              _authService.signInWithPhoneNumber(_smsCode);
+                            }
+                          }
+                        },
             ),
           ],
         ),

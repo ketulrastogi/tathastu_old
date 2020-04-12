@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
-
   @override
   _CarouselSliderWidgetState createState() => _CarouselSliderWidgetState();
 }
@@ -24,23 +23,19 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
       items: sliderImages.map((image) {
         return Builder(
           builder: (BuildContext context) {
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                          child: Container(
-                width: MediaQuery.of(context).size.width,
-                // decoration: BoxDecoration(
-                //   color: Colors.white,
-                //   borderRadius: BorderRadius.circular(8.0),
-                //   border: Border.all(color: Colors.blueGrey[50]),
-                  
-                // ),
-                child: ClipRRect(
-                  borderRadius: new BorderRadius.circular(8.0),
-                                child: Image.network(
-                      image, fit: BoxFit.fill, scale: 1.1,),
-                ),
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.all(8.0),
+              // decoration: BoxDecoration(
+              //   color: Colors.white,
+              //   borderRadius: BorderRadius.circular(8.0),
+              //   border: Border.all(color: Colors.blueGrey[50]),
+
+              // ),
+              child: Image.network(
+                image,
+                fit: BoxFit.fill,
+                // scale: 1.1,
               ),
             );
           },

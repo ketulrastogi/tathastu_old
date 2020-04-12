@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tathastu/pages/route_page/auth_route.dart';
 import 'package:tathastu/service/auth_service.dart';
 import 'package:tathastu/service/city_service.dart';
+// import 'package:native_ads/native_ads.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -71,33 +75,31 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.blueGrey.shade50,
+        backgroundColor: Colors.white,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  padding: EdgeInsets.all(24.0),
-                  child: SvgPicture.asset(
-                    'assets/logo.svg',
-                  ),
+              Container(
+                height: 100,
+                width: 100,
+                // padding: EdgeInsets.all(12.0),
+                child: SvgPicture.asset(
+                  'assets/logo.svg',
                 ),
               ),
-              SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                'Tathastu',
-                style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.display2.copyWith(
-                        color: Colors.black, fontWeight: FontWeight.bold)),
-              )
+              // SizedBox(
+              //   height: 8.0,
+              // ),
+              // Text(
+              //   'Tathastu',
+              //   style: GoogleFonts.lato(
+              //     textStyle: Theme.of(context).textTheme.display1.copyWith(
+              //           color: Colors.black,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //   ),
+              // )
             ],
           ),
         ),
