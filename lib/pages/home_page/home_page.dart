@@ -36,26 +36,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      'Patan',
-                      style: GoogleFonts.roboto(
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle
-                            .copyWith(color: Colors.blueGrey.shade800),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 4.0,
-                    ),
-                    Icon(Icons.edit_location,
-                        size: 24.0, color: Colors.blueGrey.shade800),
-                  ],
+              IconButton(
+                icon: Icon(
+                  Icons.edit_location,
                 ),
                 onPressed: () {},
+              ),
+              SizedBox(
+                width: 8.0,
               ),
             ],
             titleSpacing: 4.0,

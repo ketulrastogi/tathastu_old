@@ -22,6 +22,20 @@ class _ContactListPageState extends State<ContactListPage> {
                   color: Colors.blueGrey.shade900, fontWeight: FontWeight.bold),
             ),
           ),
+          actions: <Widget>[
+            Container(
+              padding: EdgeInsets.only(right: 16.0),
+              child: IconButton(
+                padding: EdgeInsets.all(0.0),
+                icon: Icon(
+                  Icons.filter_list,
+                  size: 30.0,
+                  semanticLabel: 'Test',
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ],
           titleSpacing: 4.0,
           leading: InkWell(
             onTap: () => Navigator.pop(context),
@@ -122,7 +136,9 @@ class _ContactListPageState extends State<ContactListPage> {
             );
           },
           separatorBuilder: (context, indext) {
-            return Divider();
+            return Divider(
+              height: 0.0,
+            );
           },
         ),
       ),
